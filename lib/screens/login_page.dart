@@ -98,6 +98,8 @@ class _LoginPageState extends State<LoginPage>{
         _buildRememberForget(),
         const SizedBox(height: 20),
         _buildLoginButton(),
+        const SizedBox(height: 20),
+        _buildOtherLogin(),
       ],
     );
   }
@@ -129,23 +131,25 @@ class _LoginPageState extends State<LoginPage>{
           children: [
             Checkbox(value: rememberUser, onChanged: (value){
               setState(() {
-                
+                true;
               });
             },
             ),
             _buildGreyText("Remember Me"),
           ],
         ),
-        TextButton(onPressed: (){}, child: _buildGreyText("I forgot my password"))
+        TextButton(onPressed: (){}, child: _buildGreyText("Sign Up"))
       ],
     );
   }
+
+
   Widget _buildLoginButton(){
     return ElevatedButton(onPressed: (){
       debugPrint("Email: ${emailcontroller.text}");
       debugPrint("Pressed : ${passwordcontroller.text}");
     },
-    style: ElevatedButton.styleForm(
+    style: ElevatedButton.styleFrom(
       shape: const StadiumBorder(),
       elevation:20,
       shadowColor:myColor,
@@ -154,4 +158,18 @@ class _LoginPageState extends State<LoginPage>{
     child: const Text("LOGIN"),
     );
   }
+
+  Widget _buildOtherLogin(){
+    return Center(
+      child: Column(
+        children: [
+          _buildGreyText("Or Login with"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+        ],
+      ),
+    );
+  }
+
 }
