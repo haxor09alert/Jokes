@@ -145,10 +145,11 @@ class _LoginPageState extends State<LoginPage>{
       debugPrint("Email: ${emailcontroller.text}");
       debugPrint("Pressed : ${passwordcontroller.text}");
     },
-    style: ElevetedButton.styleForm(
+    style: ElevatedButton.styleForm(
       shape: const StadiumBorder(),
       elevation:20,
       shadowColor:myColor,
+      minimumSize: const Size.fromHeight(60),
     ),
     child: const Text("LOGIN"),
     );
