@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget{
-  const LoginPage({super.key});
+class RegisterScreen extends StatefulWidget{
+  const RegisterScreen({super.key});
   static const routename = '/LoginPage';
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginPageState extends State<LoginPage>{
+class _RegisterScreenState extends State<RegisterScreen>{
 
 
 
@@ -85,22 +85,25 @@ class _LoginPageState extends State<LoginPage>{
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Welcome", style: TextStyle(
+        Text("Sign In", style: TextStyle(
           color: myColor,
           fontSize: 32,
           fontWeight: FontWeight.w500
           ),
         ),
-        _buildGreyText("Proceed to login to your account."),
-        const SizedBox(height: 60),
+        _buildGreyText("Proceed to create your account."),
+        const SizedBox(height: 20),
         _buildGreyText("Email Address"),
         _buildInputField(emailcontroller),
-        const SizedBox(height: 40),
+        const SizedBox(height: 20),
         _buildGreyText("Password"),
         _buildInputField(passwordcontroller,isPassword: true),
         const SizedBox(height: 20),
-        _buildRememberForget(),
+        _buildGreyText("Confirm Password"),
+        _buildInputField(passwordcontroller,isPassword: true),
         const SizedBox(height: 20),
+        // _buildRememberForget(),
+        // const SizedBox(height: 20),
         _buildLoginButton(),
         const SizedBox(height: 20),
         _buildOtherLogin(),
@@ -136,27 +139,25 @@ class _LoginPageState extends State<LoginPage>{
     );
   }
 
-  Widget _buildRememberForget() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Row(
-        children: [
-          Checkbox(
-            value: rememberUser,
-            onChanged: (bool? value) {
+  Widget _buildRememberForget(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Checkbox(value: rememberUser, onChanged: (value){
               setState(() {
-                rememberUser = value!; // Update the checkbox state when clicked
+                true;
               });
             },
-          ),
-          _buildGreyText("Remember Me"),
-        ],
-      ),
-    ],
-  );
-}
-
+            ),
+            _buildGreyText("Remember Me"),
+          ],
+        ),
+       
+      ],
+    );
+  }
 
 
   Widget _buildLoginButton(){
@@ -170,7 +171,7 @@ class _LoginPageState extends State<LoginPage>{
       shadowColor:myColor,
       minimumSize: const Size.fromHeight(60),
     ),
-    child: const Text("LOGIN"),
+    child: const Text("REGISTER"),
     );
   }
 
@@ -182,7 +183,7 @@ class _LoginPageState extends State<LoginPage>{
             setState(() {
               '/Homepage';
             });
-          }, child: _buildGreyText("Sign Up")),
+          }, child: _buildGreyText("Already have an account? Sign In")),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
