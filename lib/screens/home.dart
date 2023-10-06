@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart'as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -6,9 +7,26 @@ class HomePage extends StatefulWidget {
 
   @override
   _HomePageState createState() => _HomePageState();
+
 }
+//String stringResponse; //='';
+
+//late String stringResponse;
 
 class _HomePageState extends State<HomePage> {
+  get stringResponse =>  http.get(Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"));
+
+    Future apicall()async{
+    http.Response response;
+    response = await http.get(Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"));
+    if (response.statusCode==200){
+      setState(() {
+        stringResponse:response.body;
+      });
+    }
+  }
+
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            'Nunc ac interdum sem. Sed at dolor quis ex mattis luctus nec ullamcorper justo. Integer vitae blandit tortor. Nulla suscipit ullamcorper nisl et ullamcorper`',
+                            (stringResponse.toString()),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,

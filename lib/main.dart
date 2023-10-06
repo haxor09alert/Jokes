@@ -3,6 +3,7 @@ import 'package:joker/navigation/routes.dart';
 import 'package:joker/screens/home.dart';
 import 'package:joker/screens/login_page.dart';
 import 'package:joker/screens/sign_up_page.dart';
+import 'package:http/http.dart'as http;
 
 void main() => runApp(const MyApp());
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home:const HomePage(),
+      //initialRoute:LoginPage.routename,
     );
   }
 }
