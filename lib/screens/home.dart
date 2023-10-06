@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,16 +15,32 @@ class HomePage extends StatefulWidget {
 //late String stringResponse;
 
 class _HomePageState extends State<HomePage> {
-  get stringResponse =>  http.get(Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"));
+  get stringResponse =>  apicall();
 
     Future apicall()async{
-    http.Response response;
-    response = await http.get(Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"));
-    if (response.statusCode==200){
-      setState(() {
-        stringResponse:response.body;
-      });
+    try {
+    http.Response response = await http.get(
+      Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"),
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      Map<String, dynamic> responseData = json.decode(response.body);
+      print(response);
+
+      // Extract specific elements from the response
+      String joke = responseData['joke']; // Assuming 'joke' is a key in the response
+
+      // Print or use the extracted elements
+      print('Joke: $joke');
+    } else {
+      // Handle an error response
+      print('Error: Status code ${response.statusCode}');
     }
+  } catch (e) {
+    // Handle exceptions
+    print('Exception: $e');
+  }
   }
 
    
