@@ -23,10 +23,12 @@ class _LoginPageState extends State<LoginPage>{
     myColor =Theme.of(context).primaryColor;
     mediaSize = MediaQuery.of(context).size;
     return Container(
+      width: 375,
+      height:404,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/home.jpg"),
-           fit: BoxFit.cover,
+           fit: BoxFit.fill,
            colorFilter: 
            ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
         ),

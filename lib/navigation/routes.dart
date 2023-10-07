@@ -6,6 +6,6 @@ import 'package:joker/screens/sign_up_page.dart';
 final Map<String, WidgetBuilder> routes ={
   RegisterScreen.routename:(context) => const RegisterScreen(),
   LoginPage.routename:(context) => const LoginPage(),
-  HomePage.routeName:(context) => const HomePage(),
+  HomePage.routename:(context) => const HomePage(),
   
 };
