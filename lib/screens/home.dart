@@ -1,49 +1,54 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart'as http;
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  static const routeName = '/Homepage';
+  static const routename = '/Homepage';
 
   @override
   _HomePageState createState() => _HomePageState();
-
 }
-//String stringResponse; //='';
-
-//late String stringResponse;
 
 class _HomePageState extends State<HomePage> {
-  get stringResponse =>  apicall();
+  List<String> jokes = [];
 
-    Future apicall()async{
+  Future<void> fetchJokes() async {
     try {
-    http.Response response = await http.get(
-      Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"),
-    );
+      final response = await http.get(
+          Uri.parse("https://v2.jokeapi.dev/joke/Any?type=single&amount=10"));
 
-    if (response.statusCode == 200) {
-      // Parse the JSON response
-      Map<String, dynamic> responseData = json.decode(response.body);
-      print(response);
+      if (response.statusCode == 200) {
+        final jsonJokes = jsonDecode(response.body);
 
-      // Extract specific elements from the response
-      String joke = responseData['joke']; // Assuming 'joke' is a key in the response
-
-      // Print or use the extracted elements
-      print('Joke: $joke');
-    } else {
-      // Handle an error response
-      print('Error: Status code ${response.statusCode}');
+        setState(() {
+          jokes.clear(); // Clear previous jokes
+          for (var jsonJoke in jsonJokes) {
+            if (jsonJoke['joke'] != null) {
+              jokes.add(jsonJoke['joke']);
+            }
+          }
+        });
+      } else {
+        throw Exception('Failed to fetch jokes');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
-  } catch (e) {
-    // Handle exceptions
-    print('Exception: $e');
-  }
   }
 
-   
+  @override
+  void initState() {
+    super.initState();
+    fetchJokes();
+  }
+  
+  // void  getJokes() async {
+  //   jokes JokeList = fetchJokes();
+  //   await jokes.Jokes();
+  //   fetchJokes();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text( 
                 'Jokes',
                 style: TextStyle(
                   color: Color(0xFF730707),
@@ -62,10 +67,10 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-            SizedBox(height: 20),
+              SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: jokes.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -74,9 +79,13 @@ class _HomePageState extends State<HomePage> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          gradient: LinearGradient(colors: [Colors.red,Colors.blue,],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.red,
+                              Colors.blue,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
                           backgroundBlendMode: BlendMode.multiply,
                           borderRadius: BorderRadius.circular(16),
@@ -84,8 +93,8 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            (stringResponse.toString()),
-                            style: TextStyle(
+                            jokes[index],
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
