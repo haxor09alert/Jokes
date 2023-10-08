@@ -24,7 +24,7 @@ class _PasswordInputState extends State<PasswordInput> {
                 showPassword = !showPassword;
               });
             },
-            icon: Icon(Icons.visibility)
+            icon: Icon(Icons.visibility_off)
           ):
           IconButton(
             onPressed: (){
@@ -32,7 +32,7 @@ class _PasswordInputState extends State<PasswordInput> {
                 showPassword = !showPassword;
               });
             },
-            icon: Icon(Icons.visibility_off),
+            icon: Icon(Icons.visibility),
       ),),
       obscureText: showPassword,
       validator:(value){
