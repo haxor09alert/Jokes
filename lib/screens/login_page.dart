@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:joker/screens/home.dart';
+import 'package:joker/screens/sign_up_page.dart';
+import 'package:joker/widgets/EmailField.dart';
+import 'package:joker/widgets/InputField.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});
@@ -96,16 +100,19 @@ class _LoginPageState extends State<LoginPage>{
         _buildGreyText("Proceed to login to your account."),
         const SizedBox(height: 60),
         _buildGreyText("Email Address"),
-        _buildInputField(emailcontroller),
+        EmailWidget(controller: emailcontroller),
         const SizedBox(height: 40),
         _buildGreyText("Password"),
-        _buildInputField(passwordcontroller,isPassword: true),
+        PasswordInput(controller: passwordcontroller,),
         const SizedBox(height: 20),
         _buildRememberForget(),
         const SizedBox(height: 20),
         _buildLoginButton(),
         const SizedBox(height: 20),
         _buildOtherLogin(),
+
+        // MyOwnInput(emailcontroller: emailcontroller)
+
       ],
     );
   }
@@ -120,21 +127,21 @@ class _LoginPageState extends State<LoginPage>{
 
   Widget _buildInputField(TextEditingController controller,
   {isPassword = false}){
-    return TextField(
+    return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         suffixIcon: isPassword ? Icon(Icons.remove_red_eye):Icon(Icons.done),
       ),
       obscureText: isPassword,
-      // validator:(value){
-      //   if(isPassword && value!.isEmpty){
-      //     return 'Please enter your password.';
-      //   }
-      //   else if(!isPassword && !RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$').hasMatch(value)){
-      //     return 'Please enter valid Email Address.';
-      //   }
-      //   return null;
-      // }
+      validator:(value){
+        if(isPassword && value!.isEmpty){
+          return 'Please enter your password.';
+        }
+        else if(!isPassword && !RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$').hasMatch(value ?? "")){
+          return 'Please enter valid Email Address.';
+        }
+        return null;
+      }
     );
   }
 
@@ -163,11 +170,14 @@ class _LoginPageState extends State<LoginPage>{
 
   Widget _buildLoginButton(){
     return ElevatedButton(onPressed: (){
+      Navigator.pushNamed(context, HomePage.routename);
       debugPrint("Email: ${emailcontroller.text}");
       debugPrint("Pressed : ${passwordcontroller.text}");
     },
     style: ElevatedButton.styleFrom(
       shape: const StadiumBorder(),
+      backgroundColor: Colors.purple,
+      foregroundColor: Colors.black,
       elevation:20,
       shadowColor:myColor,
       minimumSize: const Size.fromHeight(60),
@@ -180,16 +190,38 @@ class _LoginPageState extends State<LoginPage>{
     return Center(
       child: Column(
         children: [
-          TextButton(onPressed: (){
-            setState(() {
-              '/Homepage';
-            });
-          }, child: _buildGreyText("Sign Up")),
+          TextButton(
+            onPressed: (){
+            Navigator.pushNamed(context, RegisterScreen.routename);
+          },
+           child: _buildGreyText("Sign Up")),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
         ],
       ),
+    );
+  }
+}
+
+class MyOwnInput extends StatelessWidget {
+  const MyOwnInput({
+    super.key,
+    required this.emailcontroller,
+  });
+
+  final TextEditingController emailcontroller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller:  emailcontroller,
+      validator: (String? val){
+        if(val == ""){
+          return "Please enter input";
+        }
+        return null;
+      },
     );
   }
 }

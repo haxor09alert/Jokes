@@ -13,31 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey),
         useMaterial3: true,
       ),
-      home:const HomePage(),
-      //initialRoute:LoginPage.routename,
+      home:LoginPage(),
+      initialRoute:LoginPage.routename,
+           routes:{
+            RegisterScreen.routename:(context) =>RegisterScreen(),
+            HomePage.routename :(context)=> HomePage(),
+            LoginPage.routename:(context) => LoginPage(),
+           },
     );
   }
 }
-//  @override
-//  State<MyApp> createState()=>_MyAppState();
-// }
-// final GlobalKey<NavigatorState> navigatorKey= GlobalKey<NavigatorState>();
-
-// class _MyAppState extends State<MyApp>{
-//   @override
-//   Widget build(BuildContext context){
-//     return  MultiProviderWidget(
-//       child:GetMaterialApp(
-//         navigatorKey:navigatorKey,
-//         initialRoute:LoginPage.routename,
-//         routes:routes,
-//       ),
-//     );
-//   }
-// }
-  
